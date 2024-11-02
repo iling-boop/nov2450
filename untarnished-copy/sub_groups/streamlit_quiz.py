@@ -1,6 +1,9 @@
 import streamlit as st
 import random
 
+
+st.static_dir("assets")
+
 def init_session():
 
 
