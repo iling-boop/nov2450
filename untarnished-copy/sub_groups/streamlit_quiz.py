@@ -3,7 +3,7 @@ import random
 
 def init_session():
     # st.markdown("[![Click me](app/static/congrats.jpg)](https://streamlit.io)")
-
+    st.image("https://raw.githubusercontent.com/iling-boop/nov2450/main/untarnished-copy/static/congrats.jpg")
     questions = [
         {
             "q": "Coffee grounds",
