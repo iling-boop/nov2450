@@ -2,28 +2,26 @@ import streamlit as st
 import random
 
 def init_session():
-    # st.markdown("[![Click me](app/static/congrats.jpg)](https://streamlit.io)")
-    st.image("https://raw.githubusercontent.com/iling-boop/nov2450/main/untarnished-copy/static/congrats.jpg")
     questions = [
         {
             "q": "Coffee grounds",
             "a": "compost",
-            "i": "app/static/coffee_grounds.jpg",
+            "i": "coffee_grounds.jpg",
         },
         {
             "q": "Plastic food container",
             "a": "recycle",
-            "i": "app/static/plastic_food_container.jpg",
+            "i": "plastic_food_container.jpg",
         },
         {
             "q": "Banana peel",
             "a": "compost",
-            "i": "app/static/banana_peel.webp",
+            "i": "banana_peel.webp",
         },
         {
             "q": "Egg shells",
             "a": "compost",
-            "i": "app/static/egg_shells.jpeg",
+            "i": "egg_shells.jpeg",
         }
     ]
 
@@ -35,6 +33,7 @@ def init_session():
 
     # Initialize session state variables
     if "questions" not in st.session_state:
+        st.session_state.image_http = "https://raw.githubusercontent.com/iling-boop/nov2450/main/untarnished-copy/static/"
         st.session_state.total_questions = len(questions)
         st.session_state.questions = questions
         random.shuffle(st.session_state.questions)
@@ -43,10 +42,10 @@ def init_session():
         st.session_state.correct_answers = 0  # Track correct answers
         st.session_state.current_question = 0  # Track current question
 
-def closing_statement(right, total):
+def closing_statement(right, total, banner):
     # Calculate the percentage of correct answers
-    #st.image("app/static/congrats.jpg")
-    st.markdown("[![Click me](app/static/congrats.jpg)]()")
+    st.image(banner)
+
     correct_percentage = (right / total) * 100
     screen_time = 53 * right
     st.subheader("Thank you for playing :blue[Sort After Verification Everytime (SAVE)!]", divider=True)
@@ -59,18 +58,18 @@ def closing_statement(right, total):
         st.subheader(f"You saved :red[**{screen_time}**]lbs of landfill buildup!")
 
 
-def draw_bins(item):
+def draw_bins(image_http, item):
     bin_images = [
         {
-            "src": "app/static/trash.png",
+            "src": "trash.png",
             "value": "trash",
         },
         {
-            "src": "app/static/recycle.png",
+            "src": "recycle.png",
             "value": "recycle",
         },
         {
-            "src": "app/static/compost.png",
+            "src": "compost.png",
             "value": "compost",
         },
     ]
@@ -84,8 +83,8 @@ def draw_bins(item):
             if st.button(f"Sort :red[**{item}**] in the :blue[**{v}**] bin...", 
                         key=v):
                 choice = v
-            # st.image(s)
-            st.markdown(f"[![{v}]({s})]()")
+            st.image(image_http + s)
+            # st.markdown(f"[![{v}]({s})]()")
 
     return choice
 
@@ -96,7 +95,8 @@ init_session()
 # Check if all questions have been answered
 if st.session_state.current_question >= st.session_state.total_questions:
     closing_statement(st.session_state.correct_answers, 
-                      st.session_state.total_questions)
+                      st.session_state.total_questions,
+                      st.session_state.image_http + "congrats.jpg")
 else:
     # st.write(f"000 Where does **{st.session_state}**belong?")
     st.subheader(f":blue[Sort After Verification Everytime (SAVE)!]", divider=True)
@@ -107,11 +107,11 @@ else:
     i = x["i"]
     e = st.session_state.explanations[a]
     st.write(f"Which bin should you sort :red[**{q}**]?")
-    # st.image(i, use_column_width=True)
-    st.markdown(f"[![{i}]({i})]()")
+    st.image(st.session_state.image_http + i, use_column_width=True)
+    # st.markdown(f"[![{i}]({i})]()")
 
     # draw 3 bins
-    user_choice = draw_bins(q)
+    user_choice = draw_bins(st.session_state.image_http, q)
 
     # Validate the user's choice
     # st.write(f"2 - Where does **{q}** **{st.session_state}**belong?")
