@@ -1,32 +1,29 @@
 import streamlit as st
 import random
 
-
-st.static_dir("assets")
-
 def init_session():
-
+    # st.markdown("[![Click me](app/static/congrats.jpg)](https://streamlit.io)")
 
     questions = [
         {
             "q": "Coffee grounds",
             "a": "compost",
-            "i": "./assets/coffee_grounds.jpg",
+            "i": "app/static/coffee_grounds.jpg",
         },
         {
             "q": "Plastic food container",
             "a": "recycle",
-            "i": "./assets/plastic_food_container.jpg",
+            "i": "app/static/plastic_food_container.jpg",
         },
         {
             "q": "Banana peel",
             "a": "compost",
-            "i": "./assets/banana_peel.webp",
+            "i": "app/static/banana_peel.webp",
         },
         {
             "q": "Egg shells",
             "a": "compost",
-            "i": "./assets/egg_shells.jpeg",
+            "i": "app/static/egg_shells.jpeg",
         }
     ]
 
@@ -48,7 +45,8 @@ def init_session():
 
 def closing_statement(right, total):
     # Calculate the percentage of correct answers
-    st.image("./assets/congrats.jpg")
+    #st.image("app/static/congrats.jpg")
+    st.markdown("[![Click me](app/static/congrats.jpg)]()")
     correct_percentage = (right / total) * 100
     screen_time = 53 * right
     st.subheader("Thank you for playing :blue[Sort After Verification Everytime (SAVE)!]", divider=True)
@@ -64,15 +62,15 @@ def closing_statement(right, total):
 def draw_bins(item):
     bin_images = [
         {
-            "src": "./assets/trash.png",
+            "src": "app/static/trash.png",
             "value": "trash",
         },
         {
-            "src": "./assets/recycle.png",
+            "src": "app/static/recycle.png",
             "value": "recycle",
         },
         {
-            "src": "./assets/compost.png",
+            "src": "app/static/compost.png",
             "value": "compost",
         },
     ]
@@ -86,7 +84,8 @@ def draw_bins(item):
             if st.button(f"Sort :red[**{item}**] in the :blue[**{v}**] bin...", 
                         key=v):
                 choice = v
-            st.image(s)
+            # st.image(s)
+            st.markdown(f"[![{v}]({s})]()")
 
     return choice
 
@@ -108,7 +107,8 @@ else:
     i = x["i"]
     e = st.session_state.explanations[a]
     st.write(f"Which bin should you sort :red[**{q}**]?")
-    st.image(i, use_column_width=True)
+    # st.image(i, use_column_width=True)
+    st.markdown(f"[![{i}]({i})]()")
 
     # draw 3 bins
     user_choice = draw_bins(q)
@@ -134,4 +134,3 @@ else:
         st.session_state.answered = False
         st.session_state.current_question += 1
         st.rerun()  # Refresh the page for the next question
-
