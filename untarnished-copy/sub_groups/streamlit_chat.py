@@ -15,8 +15,8 @@ def default_response_generator():
 
 
 st.title("SAVE via GPT")
-
-client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+open_ai_key = st.secrets["OPENAI_API_KEY"]["key"]
+client = OpenAI(api_key=open_ai_key)
 
 if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = "gpt-3.5-turbo"
