@@ -3,7 +3,7 @@ import streamlit as st
 
 intro_page = st.Page(
     page = "sub_groups/streamlit_intro.py",
-    title = "Welcome to the SAVE Bot!",
+    title = "Welcome to the SAVE Bots!",
     default = True,
 )
 
@@ -14,7 +14,7 @@ about_page = st.Page(
 
 project_chat_page = st.Page(
     page = "sub_groups/streamlit_chat.py",
-    title = "Chat Bot",
+    title = "SAVE Chat Bot",
 )
 
 project_photo_page = st.Page(
