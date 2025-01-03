@@ -1,13 +1,12 @@
-import streamlit as st
 import random
 import time
+import streamlit as st
+from openai import OpenAI
 
-
-# Streamed response emulator
-def response_generator():
+def default_response_generator():
     response = random.choice(
         [
-            "To dispose of 19 pounds of Styrofoam, first check if local recycling centers or packaging stores like UPS and FedEx will accept it. Some locations reuse packaging materials, and websites like Earth911 or the Alliance of Foam Packaging Recyclers (AFPR) can help you find nearby drop-off points or mail-in recycling options.\n\nIf recycling isn’t available, you can break the Styrofoam into smaller pieces, place it in secure plastic bags, and throw it in the regular trash to prevent it from scattering. Never burn Styrofoam, as it releases toxic fumes, and avoid dumping it outdoors, where it can harm wildlife. \n\n Alternatively, consider offering it on platforms like Freecycle, Craigslist, or Facebook Marketplace for reuse, or donate it to local schools or art programs for creative projects. Reusing it for home insulation or future packaging can also be a practical option.",
+            "Sorry we ran out of OpenAI API quota. Please consider donating to my project. Thank you! ",
         ]
     )
     for word in response.split():
@@ -15,28 +14,38 @@ def response_generator():
         time.sleep(0.05)
 
 
-st.title("SAVE GPT")
+st.title("SAVE via GPT")
 
-# Initialize chat history
+client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+
+if "openai_model" not in st.session_state:
+    st.session_state["openai_model"] = "gpt-3.5-turbo"
+
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display chat messages from history on app rerun
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Accept user input
-if prompt := st.chat_input("What is up?"):
-    # Add user message to chat history
+if prompt := st.chat_input("Type any question about recycling / upcycling..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
 
-
-    # Display assistant response in chat message container
     with st.chat_message("assistant"):
-        response = st.write_stream(response_generator())
-    # Add assistant response to chat history
+        try:
+            stream = client.chat.completions.create(
+                model=st.session_state["openai_model"],
+                messages=[
+                    {"role": m["role"], "content": m["content"]}
+                    for m in st.session_state.messages
+                ],
+                stream=True,
+                )
+            response = st.write_stream(stream)
+        except:
+            response = st.write_stream(default_response_generator)
+
     st.session_state.messages.append({"role": "assistant", "content": response})
+
