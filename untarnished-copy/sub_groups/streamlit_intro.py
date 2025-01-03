@@ -43,5 +43,3 @@ Compostable Paper: Paper towels, napkins, and uncoated paper plates (if clean)
 
 **Key Tip**: Avoid placing meat, dairy, oils, or pet waste in regular compost unless you have a specialized composting setup.
 """)
-
-st.subheader(st.secrets["OPENAI_API_KEY"])
