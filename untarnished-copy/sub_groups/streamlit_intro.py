@@ -2,7 +2,7 @@ import streamlit as st
 
 
 
-st.title("Welcome to the SAVE Bot!")
+st.title("Welcome to the SAVE Bots!")
 st.write(":green[**S**]ort :green[**A**]fter :green[**V**]erification :green[**E**]verytime - :green[SAVE]!")
 st.write(":green[**SAVE**] our planet! Share this app with your friends, family, and community to create a more sustainable world!")
 
@@ -43,3 +43,5 @@ Compostable Paper: Paper towels, napkins, and uncoated paper plates (if clean)
 
 **Key Tip**: Avoid placing meat, dairy, oils, or pet waste in regular compost unless you have a specialized composting setup.
 """)
+
+st.subheader(st.secrets["OPENAI_API_KEY"])
