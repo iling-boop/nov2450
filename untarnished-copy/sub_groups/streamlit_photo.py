@@ -5,7 +5,7 @@ import time
 def response_generator():
     response = random.choice(
         [
-            "The object in the image is a plastic water bottle. It belongs in the recycling bin if your local recycling program accepts plastic bottles. \n\n \n\n\nThis appears to be made of PET plastic (Polyethylene Terephthalate), which is commonly recycled.\n\n Disposal Recommendation: \n\n Recycle: Empty the bottle, remove the cap (some places recycle caps separately), and rinse if possible. Place it in the recycling bin.\n Landfill: If recycling is not available in your area, you may need to dispose of it in regular trash. \n\n If you're sorting waste in a quiz or a project, this would usually be categorized under recyclable plastic.",
+            "Sorry we ran out of OpenAI API quota. Please consider donating to my project. Thank you! ",
         ]
     )
     for word in response.split():
